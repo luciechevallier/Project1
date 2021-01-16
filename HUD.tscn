@@ -1,0 +1,95 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://img/backgroup_hub.png" type="Texture" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+size = 21
+outline_color = Color( 0.0117647, 0.133333, 0.109804, 1 )
+extra_spacing_bottom = 2
+
+[node name="HUD" type="MarginContainer"]
+anchor_right = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+
+[node name="vh" type="HBoxContainer" parent="."]
+margin_right = 984.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="time" type="HBoxContainer" parent="vh"]
+margin_right = 100.0
+margin_bottom = 40.0
+
+[node name="margin_time" type="MarginContainer" parent="vh/time"]
+margin_right = 100.0
+margin_bottom = 40.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="vh/time/margin_time"]
+margin_right = 150.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 100, 40 )
+texture = ExtResource( 1 )
+
+[node name="title_time" type="Label" parent="vh/time/margin_time/NinePatchRect"]
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_right = -10.0
+text = "Time :"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tx_time" type="Label" parent="vh/time/margin_time/NinePatchRect"]
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 1 )
+text = "60"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="commentary" type="VBoxContainer" parent="vh"]
+visible = false
+margin_left = 104.0
+margin_right = 283.0
+margin_bottom = 40.0
+
+[node name="title_commentary2" type="Label" parent="vh/commentary"]
+margin_right = 179.0
+margin_bottom = 14.0
+text = "Méga Tarte"
+
+[node name="tx_commentary" type="Label" parent="vh/commentary"]
+margin_top = 18.0
+margin_right = 179.0
+margin_bottom = 32.0
+text = "Vive le Tweet à José Troump"
+
+[node name="score" type="HBoxContainer" parent="vh"]
+visible = false
+margin_left = 104.0
+margin_right = 179.0
+margin_bottom = 40.0
+alignment = 2
+
+[node name="title_score" type="Label" parent="vh/score"]
+margin_top = 13.0
+margin_right = 47.0
+margin_bottom = 27.0
+text = "Score : "
+
+[node name="tx_score" type="Label" parent="vh/score"]
+margin_left = 51.0
+margin_top = 13.0
+margin_right = 75.0
+margin_bottom = 27.0
+text = "100"

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://img/obstacle.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 107.58, 106.323 )
+
+[node name="desk" type="Area2D"]
+collision_layer = 2
+collision_mask = 13
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -34.4768, -21.0223 )
+texture = ExtResource( 1 )
+hframes = 4
+frame = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -12.6133, 4.20387 )
+shape = SubResource( 1 )
