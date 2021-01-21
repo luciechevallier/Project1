@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://code/menu.gd" type="Script" id=1]
+[ext_resource path="res://font/Niagaraphobia-Bro3.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 72
+outline_size = 5
+outline_color = Color( 0.803922, 0, 1, 1 )
+extra_spacing_char = 5
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 72
+outline_size = 4
+outline_color = Color( 0.0862745, 0.0627451, 0.784314, 1 )
+extra_spacing_char = 5
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 72
+outline_size = 5
+outline_color = Color( 0.960784, 0.25098, 0.0588235, 1 )
+extra_spacing_char = 10
+font_data = ExtResource( 2 )
+
+[node name="Menu" type="ColorRect"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 800, 600 )
+color = Color( 0.109804, 0.0117647, 0.0117647, 0.839216 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="vb" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="vb"]
+visible = false
+margin_right = 1024.0
+margin_bottom = 197.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.666667, 0.803922, 0.560784, 1 )
+text = "Score : "
+align = 1
+valign = 1
+
+[node name="Start" type="MenuButton" parent="vb"]
+modulate = Color( 0.160784, 0.815686, 0.905882, 1 )
+margin_right = 1024.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+toggle_mode = false
+text = "Start"
+
+[node name="Quit" type="MenuButton" parent="vb"]
+modulate = Color( 0.666667, 0.423529, 0.184314, 1 )
+margin_top = 302.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+toggle_mode = false
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+[connection signal="mouse_entered" from="vb/Start" to="." method="_on_Start_mouse_entered"]
+[connection signal="mouse_exited" from="vb/Start" to="." method="_on_Start_mouse_exited"]
+[connection signal="pressed" from="vb/Start" to="." method="_on_Start_pressed"]
+[connection signal="mouse_entered" from="vb/Quit" to="." method="_on_Quit_mouse_entered"]
+[connection signal="mouse_exited" from="vb/Quit" to="." method="_on_Quit_mouse_exited"]
+[connection signal="pressed" from="vb/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -8,6 +8,7 @@ func start(position_muzzle):
 	self.global_position = position_muzzle
 	
 func _ready():
+	add_to_group("projectile", true)
 	origin_scale = self.global_scale
 	max_speed *= self.global_position.y
 	velocity = Vector2.UP * max_speed

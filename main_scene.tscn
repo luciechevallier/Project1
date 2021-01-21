@@ -1,13 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://img/background.png" type="Texture" id=1]
-[ext_resource path="res://main_scene.gd" type="Script" id=2]
-[ext_resource path="res://launcher.tscn" type="PackedScene" id=3]
-[ext_resource path="res://tree.tscn" type="PackedScene" id=4]
-[ext_resource path="res://bush.tscn" type="PackedScene" id=5]
-[ext_resource path="res://HUD.tscn" type="PackedScene" id=6]
-[ext_resource path="res://rock.tscn" type="PackedScene" id=7]
-[ext_resource path="res://desk.tscn" type="PackedScene" id=8]
+[ext_resource path="res://code/main_scene.gd" type="Script" id=2]
+[ext_resource path="res://prefab/launcher.tscn" type="PackedScene" id=3]
+[ext_resource path="res://prefab/tree.tscn" type="PackedScene" id=4]
+[ext_resource path="res://prefab/bush.tscn" type="PackedScene" id=5]
+[ext_resource path="res://prefab/HUD.tscn" type="PackedScene" id=6]
+[ext_resource path="res://prefab/rock.tscn" type="PackedScene" id=7]
+[ext_resource path="res://prefab/desk.tscn" type="PackedScene" id=8]
+[ext_resource path="res://prefab/menu.tscn" type="PackedScene" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 588.039, 61.2274 )
@@ -18,8 +19,6 @@ extents = Vector2( 25.4872, 309.467 )
 [node name="main" type="Node2D"]
 light_mask = -2147483647
 script = ExtResource( 2 )
-
-[node name="HUD" parent="." instance=ExtResource( 6 )]
 
 [node name="background" type="StaticBody2D" parent="."]
 
@@ -75,6 +74,14 @@ position = Vector2( 535.02, 208.81 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="timer" type="Timer" parent="."]
-wait_time = 3.2
+wait_time = 0.5
 autostart = true
+
+[node name="HUD" parent="." instance=ExtResource( 6 )]
+anchor_bottom = 0.2
+margin_right = 1022.0
+margin_bottom = 83.0
+
+[node name="menu" parent="." instance=ExtResource( 9 )]
+visible = false
 [connection signal="timeout" from="timer" to="." method="_on_Timer_timeout"]

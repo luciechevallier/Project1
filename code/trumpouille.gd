@@ -1,16 +1,15 @@
 extends KinematicBody2D
 
-var time = 1
 var max_speed = 0.75
+var wait_time = 3.2
 var velocity = Vector2()
 var direction = []
 var isHitting = false
 
-func start(position, scale, name, time, direction):
+func start(position, scale, name, pDirection):
 	self.global_position = position
 	self.global_scale = scale
-	self.time = time
-	self.direction = direction
+	self.direction = pDirection
 	if "bush" in name or "rock" in name or "desk" in name:
 		$anim.play("bush")
 	elif "tree" in name:
@@ -23,7 +22,7 @@ func randArray(list :Array):
 
 
 func _ready():
-	$wait.start(time)
+	$wait.start(wait_time)
 	max_speed *= self.global_position.x
 
 
@@ -47,11 +46,11 @@ func _on_walk_timeout():
 
 
 func touch():
+	get_parent().addHit()
 	if not isHitting:
 		isHitting = true
 		$wait.stop()
 		set_physics_process(false)
-		get_parent().addHit()
 		$anim.play("angry")
 		yield($anim, "animation_finished")
 		queue_free()
@@ -59,3 +58,7 @@ func touch():
 
 func resize(scale):
 	velocity =  Vector2(velocity.x * scale.x, velocity.y * scale.y)
+
+
+func get_start_anim_postion():
+	return $posStartAnim.global_position

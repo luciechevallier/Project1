@@ -2,7 +2,7 @@ extends Node
 
 const cursor_width = 48
 
-onready var trumpouille = preload("res://trumpouille.tscn")
+onready var trumpouille = preload("res://prefab/trumpouille.tscn")
 onready var viewport = get_viewport()
 onready var content_width = ProjectSettings.get("display/window/size/width")
 onready var content_height = ProjectSettings.get("display/window/size/height")
@@ -10,9 +10,8 @@ onready var content_height = ProjectSettings.get("display/window/size/height")
 enum {BACKGROUND, LAUNCHER, BUSH, BUSH2, BUSH3, TREE, TREE2, ROCK, DESK, TRUMPOUILLE}
 enum {OBJECT, SCALE, POSITION, DIRECTION}
 var allNode = {}
-
-var tweetSend = 0
-var tweetStoped = 0
+var trumpouille_inst = null
+var tweet = load("res://prefab/tweet.tscn")
 
 
 func _ready():
@@ -28,7 +27,16 @@ func _ready():
 	allNode[DESK] = { OBJECT:$desk, SCALE:$desk.global_scale, POSITION:$desk.global_position, DIRECTION:[1, -1] }
 	
 	spawn_trumpouille()
+	ready_resize()
 	$launcher.global_position = Vector2(content_width / 2, $launcher.global_position.y)
+	
+	$HUD.start()
+	
+
+func ready_resize():
+	var window_size = OS.get_window_size()
+	$HUD.rect_size = Vector2(window_size.x, $HUD.rect_size.y)
+	$menu.rect_size = Vector2(window_size.x + 4, window_size.y + 4)
 	
 
 
@@ -49,6 +57,8 @@ func window_resize():
 	$left_border/CollisionShape2D.global_scale = Vector2(1, y_multiple * 2)
 	$right_border/CollisionShape2D.global_scale = Vector2(1, y_multiple * 2)
 	$right_border/CollisionShape2D.global_position.x = window_size.x - 10
+	$HUD.rect_size = Vector2(window_size.x, $HUD.rect_size.y)
+	$menu.rect_size = Vector2(window_size.x + 4, window_size.y + 4)
 	
 	for childNode in get_children():
 		if childNode.has_method("resize"):
@@ -69,6 +79,9 @@ func randArray(list :Array):
 func _process(_delta):
 	if Input.is_action_just_pressed("launch"):
 		$launcher.launch()
+	if Input.is_action_just_pressed("ui_cancel"):
+		free_all_projetile()
+		$menu.run()
 
 
 func _input(event):
@@ -79,30 +92,40 @@ func _input(event):
 
 
 func _on_Timer_timeout():
-	spawn_trumpouille()
+	if $HUD.is_time_out():
+		free_all_projetile()
+		$menu.end_game($HUD.get_tweet(), $HUD.get_splatch())
+	if not is_instance_valid(trumpouille_inst):
+		spawn_trumpouille()
 
 
 func spawn_trumpouille():
 	var nodeSpawn = randArray([BUSH, BUSH2, BUSH3, TREE, TREE2, ROCK, DESK])
-	var trump = trumpouille.instance()
-	trump.start(allNode[nodeSpawn][POSITION], Vector2(0.5, 0.5), allNode[nodeSpawn][OBJECT].get_name(), $timer.wait_time, allNode[nodeSpawn][DIRECTION])
-	add_child(trump)
-	move_child(trump, $tree.get_index())
-	allNode[TRUMPOUILLE] = { OBJECT:trump, SCALE:trump.global_scale, POSITION:trump.global_position }
+	trumpouille_inst = trumpouille.instance()
+	trumpouille_inst.start(allNode[nodeSpawn][POSITION], Vector2(0.5, 0.5), allNode[nodeSpawn][OBJECT].get_name(), allNode[nodeSpawn][DIRECTION])
+	add_child(trumpouille_inst)
+	move_child(trumpouille_inst, $tree.get_index())
+	allNode[TRUMPOUILLE] = { OBJECT:trumpouille_inst, SCALE:trumpouille_inst.global_scale, POSITION:trumpouille_inst.global_position }
 	
 	var window_size = OS.get_window_size()
 	var x_multiple = window_size.x / content_width
 	var y_multiple = window_size.y / content_height
 	allNode[TRUMPOUILLE][OBJECT].global_scale = Vector2(allNode[TRUMPOUILLE][SCALE].x * x_multiple, allNode[TRUMPOUILLE][SCALE].y * y_multiple)
 	allNode[TRUMPOUILLE][OBJECT].global_position = Vector2(allNode[TRUMPOUILLE][POSITION].x * x_multiple, allNode[TRUMPOUILLE][POSITION].y * y_multiple)
-	trump.resize(Vector2(x_multiple, y_multiple))
-	
-	
+	trumpouille_inst.resize(Vector2(x_multiple, y_multiple))
+
+
 func addTweet():
-	tweetSend += 1
-	print("tweetSend=" + str(tweetSend))
-	
+	$HUD.add_tweet()
+	var tweet_inst = tweet.instance()
+	add_child(tweet_inst)
+	tweet_inst.run(trumpouille_inst.get_start_anim_postion())
+
+
 func addHit():
-	tweetStoped += 1
-	print("tweetStoped=" + str(tweetStoped))
-	
+	$HUD.add_splatch()
+
+
+func free_all_projetile():
+	for child in get_tree().get_nodes_in_group("projectile"):
+		child.queue_free()

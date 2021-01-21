@@ -1,6 +1,6 @@
 extends Area2D
 
-onready var projectile = preload("res://projectile.tscn")
+onready var projectile = preload("res://prefab/projectile.tscn")
 
 
 func launch():
