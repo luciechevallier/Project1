@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://img/background.png" type="Texture" id=1]
 [ext_resource path="res://code/main_scene.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://prefab/rock.tscn" type="PackedScene" id=7]
 [ext_resource path="res://prefab/desk.tscn" type="PackedScene" id=8]
 [ext_resource path="res://prefab/menu.tscn" type="PackedScene" id=9]
+[ext_resource path="res://prefab/flag.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 588.039, 61.2274 )
@@ -76,6 +77,9 @@ scale = Vector2( 0.5, 0.5 )
 [node name="timer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="flag" parent="." instance=ExtResource( 10 )]
+position = Vector2( 158.571, 97.219 )
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
 anchor_bottom = 0.2

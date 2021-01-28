@@ -6,7 +6,6 @@
 [ext_resource path="res://img/Tartouille.png" type="Texture" id=4]
 [ext_resource path="res://img/Twitter_Bird.png" type="Texture" id=5]
 
-
 [sub_resource type="DynamicFont" id=1]
 size = 34
 outline_size = 1

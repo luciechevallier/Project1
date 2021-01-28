@@ -11,6 +11,7 @@ enum {BACKGROUND, LAUNCHER, BUSH, BUSH2, BUSH3, TREE, TREE2, ROCK, DESK, TRUMPOU
 enum {OBJECT, SCALE, POSITION, DIRECTION}
 var allNode = {}
 var trumpouille_inst = null
+var scale_trumpouille = 0.5
 var tweet = load("res://prefab/tweet.tscn")
 
 
@@ -102,7 +103,7 @@ func _on_Timer_timeout():
 func spawn_trumpouille():
 	var nodeSpawn = randArray([BUSH, BUSH2, BUSH3, TREE, TREE2, ROCK, DESK])
 	trumpouille_inst = trumpouille.instance()
-	trumpouille_inst.start(allNode[nodeSpawn][POSITION], Vector2(0.5, 0.5), allNode[nodeSpawn][OBJECT].get_name(), allNode[nodeSpawn][DIRECTION])
+	trumpouille_inst.start(allNode[nodeSpawn][POSITION], Vector2(1, 1) * scale_trumpouille, allNode[nodeSpawn][OBJECT].get_name(), allNode[nodeSpawn][DIRECTION])
 	add_child(trumpouille_inst)
 	move_child(trumpouille_inst, $tree.get_index())
 	allNode[TRUMPOUILLE] = { OBJECT:trumpouille_inst, SCALE:trumpouille_inst.global_scale, POSITION:trumpouille_inst.global_position }
