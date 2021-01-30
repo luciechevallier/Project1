@@ -11,6 +11,7 @@ var action_possible = true
 func run():
 	self.visible = true
 	get_tree().paused = true
+	$vb/Start.grab_focus()
 
 
 func end_game(nb_tweet, nb_splash):

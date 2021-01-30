@@ -66,7 +66,7 @@ text = "Start"
 
 [node name="Quit" type="MenuButton" parent="vb"]
 modulate = Color( 0.666667, 0.423529, 0.184314, 1 )
-margin_top = 302.0
+margin_top = 298.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
